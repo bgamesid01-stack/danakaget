@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kuis Dana Kaget</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--biru:#118EEA;--navy:#0B2A4A;--langit:#EAF5FF;--emas:#FFB020;--putih:#fff;--abu:#5b6b7c;--merah:#d93025;--hijau:#1a9d57}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Plus Jakarta Sans",system-ui,sans-serif;background:var(--langit);color:var(--navy);min-height:100vh;display:flex;justify-content:center;padding:20px 14px}
+main{width:100%;max-width:460px}
+h1{font-size:2rem;line-height:1.15;font-weight:800;margin:0 0 10px}
+h2{font-size:1.25rem;line-height:1.35;margin:0 0 16px}
+p{line-height:1.6;color:var(--abu);margin:0 0 14px}
+.kartu{background:var(--putih);border-radius:20px;padding:24px;box-shadow:0 6px 24px rgba(17,142,234,.15)}
+.hero{background:var(--biru);color:#fff;border-radius:20px;padding:28px 24px;margin-bottom:16px}
+.hero p{color:#e3f2ff}
+.hero .hadiah{display:inline-block;background:var(--emas);color:var(--navy);font-weight:800;padding:6px 14px;border-radius:999px;margin-bottom:14px}
+button{font:inherit;cursor:pointer;border:0;border-radius:14px;padding:14px 18px;font-weight:600}
+.utama{width:100%;background:var(--biru);color:#fff;font-size:1rem}
+.utama:disabled{opacity:.5;cursor:not-allowed}
+.hero .utama{background:#fff;color:var(--biru)}
+.opsi{display:block;width:100%;text-align:left;background:var(--langit);color:var(--navy);margin-bottom:10px;border:2px solid transparent}
+.opsi:hover:not(:disabled){border-color:var(--biru)}
+.opsi.benar{background:#e3f6ec;border-color:var(--hijau)}
+.opsi.salah{background:#fdeaea;border-color:var(--merah)}
+.bar{height:8px;background:var(--langit);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;background:var(--biru);width:0;transition:width .3s}
+.info{font-size:.85rem;color:var(--abu);margin-bottom:14px}
+label{display:block;font-weight:600;font-size:.9rem;margin:14px 0 6px}
+input[type=text],input[type=tel],select{width:100%;font:inherit;padding:13px;border:2px solid #d5e3f1;border-radius:12px;background:#fff;color:var(--navy)}
+input:focus,select:focus,button:focus-visible{outline:3px solid var(--emas);outline-offset:2px}
+.cek{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:.85rem;color:var(--abu);line-height:1.5}
+.cek input{margin-top:3px;width:18px;height:18px}
+.peringatan{background:#fff6e0;border-left:4px solid var(--emas);padding:12px;border-radius:8px;font-size:.85rem;color:#6b4a00;line-height:1.5;margin:14px 0}
+.pesan{margin-top:12px;font-size:.9rem;min-height:1.2em}
+.skor{font-size:3rem;font-weight:800;color:var(--biru);margin:0}
+.hidden{display:none}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+
+<!-- LAYAR 1: MULAI -->
+<section id="mulai">
+  <div class="hero">
+    <span class="hadiah">Hadiah Dana Kaget</span>
+    <h1>Kuis Dana Kaget</h1>
+    <p>Jawab 5 pertanyaan. Skor kamu akan dicatat bersama nomor e-wallet yang kamu isi di akhir.</p>
+    <button class="utama" id="btnMulai">Mulai kuis</button>
+  </div>
+</section>
+
+<!-- LAYAR 2: KUIS -->
+<section id="kuis" class="hidden">
+  <div class="kartu">
+    <div class="bar"><i id="progres"></i></div>
+    <div class="info" id="infoSoal"></div>
+    <h2 id="teksSoal"></h2>
+    <div id="opsi"></div>
+  </div>
+</section>
+
+<!-- LAYAR 3: HASIL + FORM -->
+<section id="hasil" class="hidden">
+  <div class="kartu">
+    <p class="info">Skor kamu</p>
+    <p class="skor" id="skor"></p>
+    <p id="komentar"></p>
+
+    <div class="peringatan">
+      Isi hanya nomor e-wallet. <b>Jangan pernah mengisi PIN, OTP, atau kode verifikasi</b> di web ini. Panitia tidak akan memintanya.
+    </div>
+
+    <form id="form" novalidate>
+      <label for="nama">Nama (boleh nama panggilan)</label>
+      <input type="text" id="nama" maxlength="40" autocomplete="name">
+
+      <label for="jenis">E-wallet</label>
+      <select id="jenis">
+        <option value="DANA">DANA</option>
+        <option value="OVO">OVO</option>
+        <option value="GoPay">GoPay</option>
+        <option value="ShopeePay">ShopeePay</option>
+        <option value="LinkAja">LinkAja</option>
+      </select>
+
+      <label for="nomor">Nomor e-wallet</label>
+      <input type="tel" id="nomor" inputmode="numeric" placeholder="08xxxxxxxxxx" maxlength="15" autocomplete="tel">
+
+      <label class="cek">
+        <input type="checkbox" id="setuju">
+        <span>Saya setuju nomor dan nama saya dicatat panitia hanya untuk keperluan pengiriman hadiah kuis ini.</span>
+      </label>
+
+      <div class="pesan" id="pesan" role="status"></div>
+      <button type="submit" class="utama" id="btnKirim">Kirim data</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ====== PENGATURAN: GANTI BAGIAN INI ====== */
+// Tempel URL Web App dari Google Apps Script di sini (lihat panduan).
+const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbyhn8tLQ18IgG-lSMOTe9sT03EQunn58v-UkOoKRdhM5XkYwNv_Iqy1efG1O1WIqweykg/exec";
+
+// Ubah, tambah, atau hapus soal sesuka kamu. "benar" = nomor urut jawaban (mulai dari 0).
+const SOAL = [
+  {t:"Apa ibu kota Indonesia saat ini yang masih berfungsi sebagai pusat pemerintahan?", o:["Jakarta","Bandung","Surabaya","Medan"], benar:0},
+  {t:"Berapa jumlah provinsi di pulau Jawa (tidak termasuk DKI Jakarta dan DIY)?", o:["3","4","5","6"], benar:1},
+  {t:"Hewan khas pulau Komodo adalah...", o:["Harimau Sumatra","Komodo","Orangutan","Badak Jawa"], benar:1},
+  {t:"Alat musik tradisional dari Jawa Barat yang terbuat dari bambu adalah...", o:["Sasando","Angklung","Tifa","Sape"], benar:1},
+  {t:"Hari Kemerdekaan Indonesia diperingati setiap tanggal...", o:["17 Agustus","1 Juni","28 Oktober","10 November"], benar:0}
+];
+/* ========================================= */
+
+const $ = id => document.getElementById(id);
+let idx = 0, skor = 0, terkunci = false;
+
+function tampil(id){ ["mulai","kuis","hasil"].forEach(s => $(s).classList.toggle("hidden", s !== id)); window.scrollTo(0,0); }
+
+$("btnMulai").onclick = () => { idx = 0; skor = 0; tampil("kuis"); tampilSoal(); };
+
+function tampilSoal(){
+  terkunci = false;
+  const s = SOAL[idx];
+  $("infoSoal").textContent = "Soal " + (idx+1) + " dari " + SOAL.length;
+  $("progres").style.width = (idx / SOAL.length * 100) + "%";
+  $("teksSoal").textContent = s.t;
+  const wadah = $("opsi"); wadah.innerHTML = "";
+  s.o.forEach((teks, i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "opsi"; b.textContent = teks;
+    b.onclick = () => jawab(i, b);
+    wadah.appendChild(b);
+  });
+}
+
+function jawab(i, tombol){
+  if (terkunci) return; terkunci = true;
+  const s = SOAL[idx];
+  const semua = [...$("opsi").children];
+  semua.forEach(b => b.disabled = true);
+  if (i === s.benar){ skor++; tombol.classList.add("benar"); }
+  else { tombol.classList.add("salah"); semua[s.benar].classList.add("benar"); }
+  setTimeout(() => { idx++; idx < SOAL.length ? tampilSoal() : selesai(); }, 900);
+}
+
+function selesai(){
+  const nilai = Math.round(skor / SOAL.length * 100);
+  $("skor").textContent = nilai;
+  $("komentar").textContent = skor + " dari " + SOAL.length + " jawaban benar. " +
+    (nilai === 100 ? "Sempurna!" : nilai >= 60 ? "Bagus, hampir sempurna." : "Tetap semangat, isi data di bawah untuk ikut.");
+  tampil("hasil");
+}
+
+function pesan(teks, warna){ const p = $("pesan"); p.textContent = teks; p.style.color = warna || "inherit"; }
+
+$("nomor").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, ""); });
+
+$("form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const nomor = $("nomor").value.trim();
+  if (!/^(08|628)\d{8,12}$/.test(nomor)) return pesan("Nomor tidak valid. Gunakan format 08xxxxxxxxxx.", "var(--merah)");
+  if (!$("setuju").checked) return pesan("Centang persetujuan dulu sebelum mengirim.", "var(--merah)");
+  if (!URL_APPS_SCRIPT) return pesan("Mode contoh: URL Apps Script belum diisi, data belum dikirim ke mana pun.", "var(--merah)");
+
+  const data = {
+    nama: $("nama").value.trim(),
+    ewallet: $("jenis").value,
+    nomor: nomor,
+    skor: Math.round(skor / SOAL.length * 100),
+    waktu: new Date().toISOString()
+  };
+  $("btnKirim").disabled = true; pesan("Mengirim...");
+  try {
+    // no-cors + text/plain supaya tidak diblokir CORS oleh Apps Script
+    await fetch(URL_APPS_SCRIPT, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(data)});
+    pesan("Data terkirim. Terima kasih sudah ikut kuis!", "var(--hijau)");
+    $("form").reset();
+  } catch (err) {
+    $("btnKirim").disabled = false;
+    pesan("Gagal mengirim. Periksa koneksi lalu coba lagi.", "var(--merah)");
+  }
+});
+</script>
+</body>
+</html>
