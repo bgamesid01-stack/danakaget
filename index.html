@@ -2,830 +2,189 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kuis Dana Kaget</title>
-<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sedang Update — Kembali Lagi Nanti</title>
 <style>
-:root{
-  --ink:#3B2A5C; --pink:#FF9EC4; --pinkd:#E8739F; --mint:#A8F0D1; --mintd:#7FD9B0;
-  --butter:#FFE27A; --sky:#9AD7FF; --lav:#E9E2FF; --lavd:#DED4FA; --bad:#FF8F8F; --abu:#6a5a85;
-}
-*{box-sizing:border-box}
-html{font-size:22px}
-body{
-  margin:0;min-height:100vh;padding:18px 14px 40px;display:flex;justify-content:center;
-  font-family:"VT323","Courier New",monospace;color:var(--ink);line-height:1.2;
-  background-color:var(--lav);
-  background-image:conic-gradient(var(--lavd) 25%,transparent 0 50%,var(--lavd) 0 75%,transparent 0);
-  background-size:32px 32px;
-}
-main{width:100%;max-width:480px}
-body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
-input,select{-webkit-user-select:text;user-select:text}
-svg{-webkit-user-drag:none}
-.hidden{display:none!important}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-/* ---------- Bingkai pixel ---------- */
-.px{
-  background:#fff;margin:4px;
-  box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink);
-}
-.bayang{filter:drop-shadow(6px 6px 0 rgba(59,42,92,.25))}
-.kartu{padding:22px 20px}
+  :root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --warning: #f59e0b;
+  }
 
-/* ---------- Tombol ---------- */
-.btn{
-  font:inherit;font-size:1.3rem;color:var(--ink);cursor:pointer;border:0;border-radius:0;
-  background:var(--pink);padding:10px 16px;margin:4px;
-  box-shadow:0 -4px 0 0 var(--ink),0 4px 0 0 var(--ink),-4px 0 0 0 var(--ink),4px 0 0 0 var(--ink),inset 0 -4px 0 0 rgba(59,42,92,.2);
-}
-.btn:hover:not(:disabled){background:var(--butter)}
-.btn:active:not(:disabled){transform:translateY(4px)}
-.btn:disabled{opacity:.55;cursor:not-allowed}
-.btn.lebar{width:calc(100% - 8px)}
-.btn.kecil{font-size:1rem;padding:4px 10px;background:#fff}
-:is(.btn,input,select):focus-visible{outline:4px dashed var(--ink);outline-offset:4px}
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    line-height: 1.6;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15), transparent 40%);
+  }
 
-/* ---------- Atas ---------- */
-.atas{display:flex;justify-content:flex-end;margin-bottom:12px}
+  .container {
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 0.6s ease-out;
+  }
 
-/* ---------- Panggung (hero & hasil) ---------- */
-.stage{position:relative;height:200px;background:var(--sky);overflow:hidden;display:flex;justify-content:center;align-items:flex-end;padding-bottom:30px}
-.stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:26px;background:var(--mint);box-shadow:0 -4px 0 0 var(--mintd)}
-.stage>.spr{position:relative;z-index:2}
-.stage>.abs{position:absolute;z-index:1}
-.awan{position:absolute;width:36px;height:12px;background:#fff;box-shadow:8px -8px 0 0 #fff,20px -4px 0 0 #fff,28px 0 0 0 #fff;animation:geser 14s steps(28) infinite alternate}
-.spr{display:inline-block;line-height:0}
-.spr svg{display:block}
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-@keyframes goyang{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes putar{0%{transform:scaleX(1)}25%{transform:scaleX(.5)}50%{transform:scaleX(.1)}75%{transform:scaleX(.5)}100%{transform:scaleX(1)}}
-@keyframes kerlip{0%,100%{opacity:1}50%{opacity:.15}}
-@keyframes geser{from{transform:translateX(0)}to{transform:translateX(40px)}}
-@keyframes getar{0%,100%{transform:rotate(0)}25%{transform:rotate(-4deg)}75%{transform:rotate(4deg)}}
-@keyframes jatuh{from{transform:translateY(-40px)}to{transform:translateY(220px)}}
-@keyframes loncat{0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)}}
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 48px 32px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    position: relative;
+    overflow: hidden;
+  }
 
-.hadiah{animation:goyang 1.2s steps(3) infinite}
-.hadiah.getar{animation:getar .5s steps(2) infinite}
-.koin{animation:goyang 1s steps(3) infinite}
-.koin svg{animation:putar .8s steps(4) infinite}
-.kilau{animation:kerlip 1s steps(2) infinite}
-.jatuh{position:absolute;top:0;z-index:3;animation:jatuh 1.8s steps(11) 1 both}
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), #a855f7, var(--warning));
+  }
 
-/* ---------- Layar awal ---------- */
-.stage.awal{display:block;padding:0;height:270px;background:linear-gradient(var(--sky) 0 38%,#B5E3FF 38% 66%,#D5F0FF 66% 100%)}
-.stage.awal::after{display:none}
-.stage>.matahari{position:absolute;top:36px;right:48px;width:32px;height:32px;background:var(--butter);box-shadow:-8px 0 0 0 var(--butter),8px 0 0 0 var(--butter),0 -8px 0 0 var(--butter),0 8px 0 0 var(--butter)}
-.awal .bukit{position:absolute;left:0;right:0;bottom:36px;height:92px;z-index:0;line-height:0}
-.awal .tanah{position:absolute;left:0;right:0;bottom:0;height:40px;z-index:1;background-color:var(--mint);background-image:repeating-linear-gradient(90deg,transparent 0 24px,rgba(127,217,176,.55) 24px 32px);box-shadow:0 -4px 0 0 var(--mintd)}
-.awal .tengah{position:absolute;left:0;right:0;bottom:34px;z-index:3;display:flex;justify-content:center;align-items:flex-end;gap:4px}
-.awal .kucing{animation:goyang 1.6s steps(3) infinite}
-.hujan-k{top:0;animation:hujan 5s steps(18) infinite}
-.judul{margin:22px 0 14px;line-height:.9;font-weight:400;text-align:center;text-shadow:none}
-.judul span{display:block}
-.j1{font-size:2.1rem;color:var(--pinkd);text-shadow:2px 2px 0 var(--butter)}
-.j2{font-size:clamp(2.8rem,15vw,3.8rem);color:#fff;padding-bottom:10px;
-  text-shadow:0 3px 0 var(--pinkd),0 6px 0 var(--pinkd),
-    3px 0 0 var(--ink),-3px 0 0 var(--ink),0 -3px 0 var(--ink),3px -3px 0 var(--ink),-3px -3px 0 var(--ink),
-    3px 3px 0 var(--ink),-3px 3px 0 var(--ink),3px 6px 0 var(--ink),-3px 6px 0 var(--ink),
-    0 9px 0 var(--ink),3px 9px 0 var(--ink),-3px 9px 0 var(--ink)}
-.awal-isi p{text-align:center}
-.sub{font-size:1.25rem;max-width:34ch;margin:0 auto 4px}
-.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:14px 0 18px}
-.chip{margin:4px;background:var(--lav);padding:6px 12px;display:flex;align-items:center;gap:8px;font-size:1.2rem;color:var(--ink)}
-.btn.besar{display:flex;align-items:center;justify-content:center;gap:12px;font-size:1.8rem;padding:14px 16px;margin-bottom:14px}
-@keyframes hujan{from{transform:translateY(-30px)}to{transform:translateY(240px)}}
-.jadwal{margin:4px 4px 18px;padding:12px 14px;background:var(--butter);text-align:center}
-.jadwal.buka{background:var(--mint)}
-.jadwal p{margin:0;color:var(--ink)}
-.jadwal .jadwal-judul{font-size:1.2rem}
-.jadwal .jadwal-waktu{font-size:1.35rem;margin-bottom:10px}
-.hitung{display:flex;justify-content:center;gap:10px}
-.kotak{min-width:60px;padding:6px 4px;background:#fff;box-shadow:0 0 0 3px var(--ink)}
-.kotak b{display:block;font-size:2rem;line-height:1;font-weight:400}
-.kotak span{font-size:.95rem;color:var(--abu)}
-.stage.awal.pendek{height:230px}
-.j2.sedang{font-size:clamp(2.2rem,11vw,3rem)}
+  /* Ikon animasi */
+  .icon {
+    width: 88px;
+    height: 88px;
+    margin: 0 auto 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    animation: float 3s ease-in-out infinite;
+  }
 
-/* ---------- Teks ---------- */
-h1{font-size:3rem;line-height:.95;margin:16px 0 8px;font-weight:400;text-shadow:3px 3px 0 var(--pink)}
-h2{font-size:1.6rem;line-height:1.15;margin:6px 0 14px;font-weight:400}
-p{font-size:1.15rem;margin:0 0 12px;color:var(--abu);line-height:1.25}
-.isi{padding:4px 20px 22px}
-.kecil{font-size:.95rem}
+  .icon svg {
+    width: 44px;
+    height: 44px;
+    stroke: var(--primary);
+    animation: spin 6s linear infinite;
+  }
 
-/* ---------- Kuis ---------- */
-.bagian{display:flex;gap:6px;margin-bottom:12px}
-.bagian i{flex:1;height:14px;background:var(--lavd);box-shadow:0 0 0 2px var(--ink)}
-.bagian i.isi-p{background:var(--pink)}
-.bagian i.kini{background:var(--butter)}
-.status{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:1.15rem}
-.skorkoin{display:flex;align-items:center;gap:6px}
-.opsi{display:block;width:calc(100% - 8px);text-align:left;margin:12px 4px;background:var(--lav)}
-.opsi b{display:inline-block;min-width:1.4em;color:var(--pinkd);font-weight:400}
-.opsi.benar{background:var(--mint)}
-.opsi.salah{background:var(--bad)}
-.umpan{min-height:1.4em;font-size:1.3rem;margin-top:6px}
-.waktu{display:flex;align-items:center;gap:12px;margin:0 2px 14px}
-.waktu-bar{flex:1;height:18px;background:var(--lavd);box-shadow:0 0 0 2px var(--ink);overflow:hidden}
-.waktu-bar i{display:block;height:100%;width:100%;background:var(--mint)}
-.waktu-angka{min-width:2ch;text-align:right;font-size:1.5rem;line-height:1}
-.waktu.genting .waktu-bar i{background:var(--bad)}
-.waktu.genting .waktu-angka{color:#c0392b}
-.isian{display:flex;gap:6px;align-items:stretch;margin:12px 0 4px}
-.isian input{flex:1;min-width:0}
-.isian .btn{margin:0 4px 0 8px}
-.petunjuk{font-size:1rem;margin:-6px 0 6px}
-input:disabled{color:var(--ink);opacity:1}
-input.benar{background:var(--mint)}
-input.salah{background:var(--bad)}
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
 
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
 
-/* ---------- Hasil ---------- */
-.bintang{display:flex;justify-content:center;gap:10px;margin:14px 0 4px}
-.skor{font-size:5rem;line-height:1;text-align:center;margin:0;color:var(--ink);text-shadow:4px 4px 0 var(--butter)}
-.label-skor{text-align:center;margin:0}
-.komentar{text-align:center}
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff, #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-/* ---------- Form ---------- */
-label{display:block;font-size:1.2rem;margin:14px 0 6px}
-input[type=text],input[type=tel],select{
-  width:100%;font:inherit;font-size:1.3rem;color:var(--ink);background:#fff;border:4px solid var(--ink);border-radius:0;padding:6px 10px;
-}
-input:focus,select:focus{box-shadow:0 0 0 4px var(--butter)}
-.cek{display:flex;gap:12px;align-items:flex-start;font-size:1.05rem;color:var(--abu);margin-top:16px;cursor:pointer}
-.cek input{appearance:none;flex:none;width:26px;height:26px;margin:2px 0 0;border:4px solid var(--ink);background:#fff;border-radius:0;cursor:pointer}
-.cek input:checked{background:var(--pink);box-shadow:inset 0 0 0 4px #fff}
-.cek input:focus-visible{outline:4px dashed var(--ink);outline-offset:3px}
-.peringatan{background:var(--butter);padding:12px 14px;margin:16px 4px;font-size:1.1rem;color:var(--ink);line-height:1.2}
-.pesan{min-height:1.3em;margin:12px 4px 4px;font-size:1.2rem}
+  p {
+    color: var(--muted);
+    font-size: 15px;
+  }
 
-@media (prefers-reduced-motion:reduce){
-  .awan,.hadiah,.hadiah.getar,.koin,.koin svg,.kilau,.jatuh,.kucing,.hujan-k{animation:none!important}
-  .jatuh{display:none}
-}
-@media (min-width:480px){h1{font-size:3.4rem}}
+  .divider {
+    width: 60px;
+    height: 3px;
+    margin: 24px auto;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--primary), #a855f7);
+  }
+
+  .note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  /* Progress dots */
+  .dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.3;
+    animation: blink 1.4s infinite;
+  }
+
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.2); }
+  }
+
+  @media (max-width: 480px) {
+    .card { padding: 36px 22px; }
+    h1 { font-size: 22px; }
+    .icon { width: 72px; height: 72px; }
+    .icon svg { width: 36px; height: 36px; }
+  }
 </style>
 </head>
 <body>
-<main>
-
-<div class="atas">
-  <button class="btn kecil" id="btnSuara" type="button" aria-pressed="true">Suara: nyala</button>
-</div>
-
-<!-- ===== LAYAR 1: MULAI ===== -->
-<section id="mulai">
-  <div class="bayang">
-    <div class="px">
-      <div class="stage awal" aria-hidden="true">
-        <i class="matahari"></i>
-        <i class="awan" style="top:30px;left:6%"></i>
-        <i class="awan" style="top:74px;right:5%;animation-delay:-7s"></i>
-        <span class="bukit" data-bukit></span>
-        <span class="tanah"></span>
-        <span class="spr abs kilau" style="left:31%;top:48px" data-spr="kilau" data-scale="4"></span>
-        <span class="spr abs kilau" style="right:27%;top:118px;animation-delay:-.5s" data-spr="kilau" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:9%;animation-delay:-1s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:27%;animation-delay:-3.2s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:48%;animation-delay:-2.1s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:69%;animation-delay:-4.1s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:88%;animation-delay:-.2s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs bunga" style="left:5%;bottom:40px" data-spr="bunga" data-scale="4"></span>
-        <span class="spr abs bunga" style="left:19%;bottom:34px" data-spr="bunga" data-scale="4"></span>
-        <span class="spr abs bunga" style="right:17%;bottom:36px" data-spr="bunga" data-scale="4"></span>
-        <span class="spr abs bunga" style="right:4%;bottom:42px" data-spr="bunga" data-scale="4"></span>
-        <div class="tengah">
-          <span class="spr kucing" data-spr="kucing" data-scale="6"></span>
-          <span class="spr hadiah" data-spr="hadiah" data-scale="9"></span>
-        </div>
+  <div class="container">
+    <div class="card">
+      <div class="icon">
+        <!-- Ikon gear / tools -->
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+        </svg>
       </div>
-      <div class="isi awal-isi">
-        <h1 class="judul"><span class="j1">Kuis</span><span class="j2">Dana Kaget</span></h1>
-        <p class="sub">Jawab soalnya dengan benar, kumpulkan koin dan bintang, lalu isi nomor e-wallet di akhir untuk ikut Dana Kaget.</p>
-        <div class="chips">
-          <span class="px chip"><span class="spr" data-spr="bintang" data-scale="3"></span><span><span id="jumlahSoal">5</span> soal</span></span>
-          <span class="px chip"><span class="spr" data-spr="jam" data-scale="3"></span><span><span id="chipWaktu">30</span> detik</span></span>
-          <span class="px chip"><span class="spr" data-spr="koin" data-scale="3"></span><span>Dana Kaget</span></span>
-        </div>
-        <div class="px jadwal hidden" id="jadwal">
-          <p class="jadwal-judul" id="jadwalJudul" aria-live="polite"></p>
-          <p class="jadwal-waktu" id="jadwalWaktu"></p>
-          <div class="hitung" id="hitung" aria-hidden="true">
-            <div class="kotak"><b id="cHari">00</b><span>hari</span></div>
-            <div class="kotak"><b id="cJam">00</b><span>jam</span></div>
-            <div class="kotak"><b id="cMenit">00</b><span>menit</span></div>
-            <div class="kotak"><b id="cDetik">00</b><span>detik</span></div>
-          </div>
-        </div>
-        <button class="btn lebar besar" id="btnMulai" type="button"><span class="spr kilau" data-spr="main" data-scale="3"></span><span id="teksMulai">Mulai main</span></button>
-        <p class="kecil" id="infoWaktu"></p>
-        <p class="kecil" id="penyelenggara"></p>
+
+      <h1>Website Sedang Update</h1>
+      <p>Kami sedang melakukan pembaruan sistem untuk pengalaman yang lebih baik.</p>
+
+      <div class="divider"></div>
+
+      <p><strong>Silakan kembali lagi nanti.</strong></p>
+      <p class="note">Terima kasih atas kesabaran Anda 🙏</p>
+
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
     </div>
   </div>
-</section>
-
-<!-- ===== LAYAR 2: KUIS ===== -->
-<section id="kuis" class="hidden">
-  <div class="bayang">
-    <div class="px kartu">
-      <div class="status">
-        <span id="infoSoal"></span>
-        <span class="skorkoin"><span class="spr" data-spr="koin" data-scale="3"></span><span id="koinSkor">x 0</span></span>
-      </div>
-      <div class="bagian" id="bagian" aria-hidden="true"></div>
-      <div class="waktu" id="waktu" aria-hidden="true"><div class="waktu-bar"><i id="waktuIsi"></i></div><span class="waktu-angka" id="waktuAngka"></span></div>
-      <h2 id="teksSoal"></h2>
-      <p class="petunjuk" id="petunjuk"></p>
-      <div class="isian" id="formJawab">
-        <input type="text" id="jawaban" maxlength="60" placeholder="Ketik jawabanmu" aria-label="Jawabanmu" autocomplete="off" autocapitalize="none" spellcheck="false">
-        <button type="button" class="btn" id="btnJawab">Jawab</button>
-      </div>
-      <div class="umpan" id="umpan" role="status" aria-live="polite"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== LAYAR 3: HASIL + FORM ===== -->
-<section id="hasil" class="hidden">
-  <div class="bayang">
-    <div class="px">
-      <div class="stage" id="panggungHasil" aria-hidden="true">
-        <i class="awan" style="top:20px;left:12%"></i>
-        <i class="awan" style="top:56px;right:12%;animation-delay:-5s"></i>
-        <span class="spr hadiah getar" data-spr="hadiah" data-scale="8"></span>
-      </div>
-      <div class="isi">
-        <div class="bintang" id="bintang" aria-hidden="true"></div>
-        <p class="label-skor">Skor kamu</p>
-        <p class="skor" id="skor"></p>
-        <p class="komentar" id="komentar"></p>
-
-        <div class="peringatan">
-          Isi hanya nomor e-wallet. Jangan pernah mengisi PIN, OTP, atau kode verifikasi di web ini. Panitia tidak akan memintanya.
-        </div>
-
-        <div id="form">
-          <label for="nama">Nama (boleh nama panggilan)</label>
-          <input type="text" id="nama" maxlength="40" autocomplete="name">
-
-          <label for="jenis">E-wallet</label>
-          <select id="jenis">
-            <option value="DANA">DANA</option>
-            <option value="OVO">OVO</option>
-            <option value="GoPay">GoPay</option>
-            <option value="ShopeePay">ShopeePay</option>
-            <option value="LinkAja">LinkAja</option>
-          </select>
-
-          <label for="nomor">Nomor e-wallet</label>
-          <input type="tel" id="nomor" inputmode="numeric" placeholder="08xxxxxxxxxx" maxlength="15" autocomplete="tel">
-
-          <label class="cek">
-            <input type="checkbox" id="setuju">
-            <span>Saya setuju nama dan nomor saya dicatat panitia hanya untuk mengirim hadiah kuis ini.</span>
-          </label>
-
-          <div class="pesan" id="pesan" role="status"></div>
-          <button type="button" class="btn lebar" id="btnKirim">Kirim data</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== LAYAR 4: SUDAH KIRIM (TERKUNCI) ===== -->
-<section id="selesai" class="hidden">
-  <div class="bayang">
-    <div class="px">
-      <div class="stage awal pendek" aria-hidden="true">
-        <i class="matahari"></i>
-        <i class="awan" style="top:30px;left:6%"></i>
-        <i class="awan" style="top:70px;right:5%;animation-delay:-7s"></i>
-        <span class="bukit" data-bukit></span>
-        <span class="tanah"></span>
-        <span class="spr abs kilau" style="left:30%;top:44px" data-spr="kilau" data-scale="4"></span>
-        <span class="spr abs hujan-k" style="left:12%;animation-delay:-1s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:40%;animation-delay:-3s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:66%;animation-delay:-2s" data-spr="koin" data-scale="3"></span>
-        <span class="spr abs hujan-k" style="left:88%;animation-delay:-4s" data-spr="koin" data-scale="3"></span>
-        <div class="tengah">
-          <span class="spr kucing" data-spr="kucing" data-scale="5"></span>
-          <span class="spr hadiah" data-spr="hadiah" data-scale="7"></span>
-        </div>
-      </div>
-      <div class="isi awal-isi">
-        <h1 class="judul"><span class="j1">Terima kasih!</span><span class="j2 sedang">Data terkirim</span></h1>
-        <p class="sub" id="pesanSelesai" role="status"></p>
-        <p class="kecil">Kamu sudah ikut kuis ini, jadi halaman ini tidak bisa dimainkan lagi di perangkat ini.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<script>
-/* ============ PENGATURAN: GANTI BAGIAN INI ============ */
-// Tempel URL Web App dari Google Apps Script (berakhiran /exec).
-const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycbxci7cXXDA83ch72JxvbHPWRzLfP2pfEq8P__XYnCTjxjXwHbRc43Yu1aLejiXJ2_Jwxw/exec";
-
-// Nama penyelenggara, tampil di halaman awal (disarankan diisi agar peserta percaya).
-const PENYELENGGARA = "";
-
-// Waktu kuis mulai dibuka. Sebelum waktu ini tombol "Mulai main" terkunci dan muncul hitung mundur.
-// Format: "TAHUN-BULAN-TANGGALTJAM:MENIT:DETIK+ZONA"  (+07:00 = WIB, +08:00 = WITA, +09:00 = WIT).
-// Kosongkan ("") kalau kuis boleh dimulai kapan saja.
-const WAKTU_MULAI = "2026-11-20T13:00:00+07:00";
-// Zona waktu untuk menampilkan jadwal: "Asia/Jakarta" (WIB), "Asia/Makassar" (WITA), "Asia/Jayapura" (WIT).
-const ZONA_TAMPIL = "Asia/Jakarta";
-
-// Pesan yang tampil setelah peserta berhasil mengirim data (halaman lalu terkunci).
-const PESAN_PEMENANG = "Informasi pemenang akan diumumkan nanti oleh penyelenggara. Pantau terus ya!";
-
-// Waktu menjawab tiap soal, dalam detik.
-const WAKTU_JAWAB = 30;
-
-// Yang terjadi kalau waktu habis:
-//   "ulang-semua" = seluruh kuis mulai dari soal 1 lagi, skor kembali 0 (bawaan)
-//   "ulang-soal"  = hanya soal yang sedang dikerjakan diulang dari awal, tanpa koin untuk soal itu
-const MODE_WAKTU_HABIS = "ulang-semua";
-
-// Jumlah soal yang diundi dari bank soal setiap kali kuis dimulai.
-const JUMLAH_SOAL = 20;
-
-// BANK SOAL: tambah sebanyak mungkin, tiap kali main soalnya diundi acak dari sini.
-// t = teks soal, j = daftar jawaban yang diterima (huruf besar/kecil dan tanda baca tidak berpengaruh),
-// h = petunjuk kecil di bawah soal (boleh dikosongkan).
-// Salah satu huruf saja (typo kecil) tetap diterima untuk jawaban 6 huruf ke atas.
-// Hindari soal yang jawabannya sudah tertulis di soal lain.
-const BANK_SOAL = [
-  {t:"Apa nama benda yang memiliki gigi tetapi tidak bisa menggigit?", j:["Sisir"], h:""},
-  {t:"Apa yang selalu bertambah tetapi tidak pernah berkurang?", j:["Usia","umur"], h:""},
-  {t:"Apa yang bisa pecah tanpa pernah disentuh?", j:["Janji"], h:""},
-  {t:"Apa yang memiliki leher tetapi tidak memiliki kepala?", j:["Botol"], h:""},
-  {t:"Apa yang semakin diambil justru semakin besar?", j:["Lubang"], h:""},
-  {t:"Apa yang bisa berjalan tanpa memiliki kaki?", j:["Waktu"], h:""},
-  {t:"Apa yang memiliki banyak kunci tetapi tidak bisa membuka pintu?", j:["Piano"], h:""},
-  {t:"Apa yang bisa memenuhi ruangan tanpa membutuhkan tempat?", j:["Cahaya"], h:""},
-  {t:"Apa yang selalu datang tetapi tidak pernah tiba?", j:["Masa depan"], h:""},
-  {t:"Apa yang bisa dilihat tetapi tidak bisa disentuh?", j:["Bayangan"], h:""},
-  {t:"Apa yang memiliki mata tetapi tidak bisa melihat?", j:["Jarum"], h:""},
-  {t:"Apa yang hilang ketika namanya disebut?", j:["Keheningan"], h:""},
-  {t:"Apa yang bisa menjawab tanpa pernah berbicara?", j:["Gema"], h:""},
-  {t:"Apa yang semakin basah ketika mengeringkan?", j:["Handuk"], h:""},
-  {t:"Apa yang dimiliki semua orang tetapi lebih sering digunakan orang lain?", j:["Nama"], h:""},
-  {t:"Apa yang tidak memiliki awal dan akhir?", j:["Lingkaran"], h:""},
-  {t:"Apa yang bisa terbang tanpa sayap?", j:["Waktu"], h:""},
-  {t:"Apa yang bisa dibuka tetapi tidak memiliki engsel?", j:["Buku"], h:""},
-  {t:"Apa yang berada di antara langit dan bumi?", j:["dan"], h:"kata penghubung"},
-  {t:"anak belajar itu biar?", j:["biarkansaja","biarkan saja"], h:"tanyakan IWAK TRI"}
-];
-/* ====================================================== */
-
-/* ---------- Sprite pixel ---------- */
-const WARNA = {o:"#3B2A5C",y:"#FFD84D",d:"#E0A800",l:"#FFF6B8",p:"#FF9EC4",k:"#E8739F",w:"#FFFFFF",e:"#D9CFF5",g:"#5BC98A"};
-const GAMBAR = {
-  hadiah:[
-    "..ooo...ooo..",
-    ".oyyyo.oyyyo.",
-    ".oyyyyoyyyyo.",
-    "..ooooyoooo..",
-    "ooooooooooooo",
-    "oppppyyyppppo",
-    "okkkkyyykkkko",
-    "ooooooooooooo",
-    ".owppyyyppppo",
-    ".opppyyypppo.",
-    ".opppyyypppo.",
-    ".okkkyyykkko.",
-    ".ooooooooooo."
-  ],
-  koin:[
-    "..oooo..",
-    ".oyyyyo.",
-    "oylyyyyo",
-    "oylyyyyo",
-    "oyyyyydo",
-    "oyyyyydo",
-    ".oyyyyo.",
-    "..oooo.."
-  ],
-  bintang:[
-    "....o....",
-    "...oyo...",
-    "...oyo...",
-    "ooooyoooo",
-    "oyyyyyyyo",
-    ".oyyyyyo.",
-    "..oyyyo..",
-    ".oyyoyyo.",
-    ".ooo.ooo."
-  ],
-  kilau:[
-    "..w..",
-    "..w..",
-    "wwwww",
-    "..w..",
-    "..w.."
-  ],
-  kucing:[
-    "oo.......oo",
-    "owo.....owo",
-    "owwooooowwo",
-    "owwwwwwwwwo",
-    "owwowwwowwo",
-    "owwwwwwwwwo",
-    "opwwwkwwwpo",
-    "owwwwwwwwwo",
-    ".owwwwwwwo.",
-    "..ooooooo.."
-  ],
-  jam:[
-    "..ooooo..",
-    ".opppppo.",
-    "opppopppo",
-    "opppopppo",
-    "opppooopo",
-    "opppppppo",
-    ".opppppo.",
-    "..ooooo.."
-  ],
-  bunga:[
-    ".p.p.",
-    "ppypp",
-    ".ppp.",
-    "..g..",
-    "..g.."
-  ],
-  main:[
-    "o......",
-    "ooo....",
-    "ooooo..",
-    "ooooooo",
-    "ooooo..",
-    "ooo....",
-    "o......"
-  ]
-};
-function sprite(nama, skala, kosong){
-  const g = GAMBAR[nama], h = g.length, w = g[0].length;
-  let r = "";
-  g.forEach((baris, y) => {
-    [...baris].forEach((c, x) => {
-      if (c === ".") return;
-      let warna = WARNA[c];
-      if (kosong && (c === "y")) warna = WARNA.e;
-      r += '<rect x="'+x+'" y="'+y+'" width="1" height="1" fill="'+warna+'"/>';
-    });
-  });
-  return '<svg xmlns="http://www.w3.org/2000/svg" width="'+(w*skala)+'" height="'+(h*skala)+'" viewBox="0 0 '+w+' '+h+'" shape-rendering="crispEdges" aria-hidden="true">'+r+'</svg>';
-}
-document.querySelectorAll("[data-spr]").forEach(el => {
-  el.innerHTML = sprite(el.dataset.spr, +el.dataset.scale || 4);
-});
-
-// Bukit pixel di latar halaman awal: dua lapis, tinggi tiap kolom dihitung dari gelombang sinus.
-function bukit(){
-  const W = 48, H = 12;
-  const lapis = [
-    {warna:"#C9F5E1", tinggi: x => Math.round(7 + 3 * Math.sin(x / 4.2))},
-    {warna:"#B2EED3", tinggi: x => Math.round(4 + 2.4 * Math.sin(x / 2.8 + 1.5))}
-  ];
-  let r = "";
-  lapis.forEach(l => {
-    for (let x = 0; x < W; x++){
-      const h = l.tinggi(x);
-      r += '<rect x="'+x+'" y="'+(H-h)+'" width="1" height="'+h+'" fill="'+l.warna+'"/>';
-    }
-  });
-  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" width="100%" height="100%" shape-rendering="crispEdges" aria-hidden="true">'+r+'</svg>';
-}
-document.querySelectorAll("[data-bukit]").forEach(el => { el.innerHTML = bukit(); });
-
-/* ---------- Suara 8-bit ---------- */
-let ac = null, suaraNyala = true;
-function audio(){
-  if (!ac){ try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch(e){} }
-  if (ac && ac.state === "suspended") ac.resume();
-  return ac;
-}
-function nada(daftar){ try { nadaAsli(daftar); } catch(e){} }
-function nadaAsli(daftar){
-  if (!suaraNyala) return;
-  const c = audio(); if (!c) return;
-  let t = c.currentTime;
-  daftar.forEach(([f, d]) => {
-    const o = c.createOscillator(), g = c.createGain();
-    o.type = "square"; o.frequency.value = f;
-    g.gain.setValueAtTime(.07, t);
-    g.gain.exponentialRampToValueAtTime(.001, t + d);
-    o.connect(g); g.connect(c.destination);
-    o.start(t); o.stop(t + d);
-    t += d;
-  });
-}
-const BUNYI = {
-  klik:[[880,.05]],
-  tik:[[1200,.04]],
-  benar:[[523,.08],[659,.08],[784,.16]],
-  salah:[[220,.14],[165,.24]],
-  menang:[[523,.1],[659,.1],[784,.1],[1047,.28]],
-  kalah:[[392,.12],[330,.12],[262,.26]]
-};
-const $ = id => document.getElementById(id);
-$("btnSuara").onclick = () => {
-  suaraNyala = !suaraNyala;
-  $("btnSuara").textContent = "Suara: " + (suaraNyala ? "nyala" : "mati");
-  $("btnSuara").setAttribute("aria-pressed", suaraNyala);
-  nada(BUNYI.klik);
-};
-
-/* ---------- Blok salin teks ---------- */
-["copy", "cut", "contextmenu", "dragstart", "selectstart"].forEach(nama => {
-  document.addEventListener(nama, e => {
-    const t = e.target && e.target.nodeType === 3 ? e.target.parentElement : e.target;
-    // kolom isian tetap boleh diseleksi agar bisa mengetik/mengedit jawaban
-    if (nama === "selectstart" && t && t.closest && t.closest("input,select,textarea")) return;
-    e.preventDefault();
-  });
-});
-
-/* ---------- Alur kuis ---------- */
-let idx = 0, skor = 0, terkunci = false, salahKali = 0;
-let SOAL = [];   // soal yang sedang dimainkan (hasil undian dari BANK_SOAL)
-
-// Undi soal baru: acak urutan bank dengan Fisher-Yates, lalu ambil JUMLAH_SOAL pertama.
-function acakSoal(){
-  const a = BANK_SOAL.slice();
-  for (let i = a.length - 1; i > 0; i--){
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  SOAL = a.slice(0, Math.min(JUMLAH_SOAL, a.length));
-}
-if (PENYELENGGARA) $("penyelenggara").textContent = "Penyelenggara: " + PENYELENGGARA;
-$("jumlahSoal").textContent = Math.min(JUMLAH_SOAL, BANK_SOAL.length);
-$("chipWaktu").textContent = WAKTU_JAWAB;
-$("infoWaktu").textContent = "Soal diacak setiap kali main. Waktu menjawab " + WAKTU_JAWAB + " detik per soal. Kalau waktu habis, " +
-  (MODE_WAKTU_HABIS === "ulang-soal" ? "soal itu diulang dari awal tanpa koin." : "kuis diulang dari soal pertama dengan soal baru.");
-
-function tampil(id){
-  ["mulai","kuis","hasil","selesai"].forEach(s => $(s).classList.toggle("hidden", s !== id));
-  window.scrollTo(0, 0);
-}
-
-$("btnMulai").onclick = () => { if (sudahKirim() || (tMulai && Date.now() < tMulai)) return; nada(BUNYI.klik); acakSoal(); idx = 0; skor = 0; tampil("kuis"); tampilSoal(); };
-
-/* ---------- Jadwal mulai kuis ---------- */
-const tMulai = (() => {
-  if (!WAKTU_MULAI) return 0;
-  const t = new Date(WAKTU_MULAI).getTime();
-  if (isNaN(t)){ console.warn("WAKTU_MULAI tidak valid, kuis dibuka sekarang."); return 0; }
-  return t;
-})();
-const LABEL_ZONA = {"Asia/Jakarta":"WIB", "Asia/Makassar":"WITA", "Asia/Jayapura":"WIT"};
-const dua = n => String(n).padStart(2, "0");
-function teksJadwal(t){
-  try {
-    const b = {};
-    new Intl.DateTimeFormat("id-ID", {weekday:"long", day:"numeric", month:"long", year:"numeric",
-      hour:"2-digit", minute:"2-digit", hourCycle:"h23", timeZone:ZONA_TAMPIL})
-      .formatToParts(new Date(t)).forEach(p => { b[p.type] = p.value; });
-    return b.weekday + ", " + b.day + " " + b.month + " " + b.year + ", " + b.hour + "." + b.minute + " " + (LABEL_ZONA[ZONA_TAMPIL] || ZONA_TAMPIL);
-  } catch (e){ return new Date(t).toLocaleString("id-ID"); }
-}
-let pewaktuJadwal = null;
-function perbaruiJadwal(){
-  const blok = $("jadwal");
-  const sisa = tMulai - Date.now();
-  if (!tMulai || sisa <= 0){
-    $("btnMulai").disabled = false; $("teksMulai").textContent = "Mulai main";
-    if (pewaktuJadwal === null){ blok.classList.add("hidden"); return; }   // sudah terbuka sejak halaman dimuat
-    clearInterval(pewaktuJadwal); pewaktuJadwal = null;                    // baru saja terbuka: beri tahu pemain
-    blok.classList.remove("hidden"); blok.classList.add("buka");
-    $("jadwalJudul").textContent = "Kuis sudah dibuka. Selamat bermain!";
-    $("jadwalWaktu").classList.add("hidden"); $("hitung").classList.add("hidden");
-    return;
-  }
-  blok.classList.remove("hidden", "buka");
-  $("jadwalWaktu").classList.remove("hidden"); $("hitung").classList.remove("hidden");
-  $("jadwalJudul").textContent = "Kuis dibuka pada";
-  $("jadwalWaktu").textContent = teksJadwal(tMulai);
-  const d = Math.ceil(sisa / 1000);
-  $("cHari").textContent = dua(Math.floor(d / 86400));
-  $("cJam").textContent = dua(Math.floor(d % 86400 / 3600));
-  $("cMenit").textContent = dua(Math.floor(d % 3600 / 60));
-  $("cDetik").textContent = dua(d % 60);
-  $("btnMulai").disabled = true; $("teksMulai").textContent = "Belum dibuka";
-}
-if (tMulai && Date.now() < tMulai) pewaktuJadwal = setInterval(perbaruiJadwal, 500);
-perbaruiJadwal();
-
-function gambarBagian(){
-  $("bagian").innerHTML = SOAL.map((_, i) => '<i class="'+(i < idx ? "isi-p" : i === idx ? "kini" : "")+'"></i>').join("");
-}
-
-/* ---------- Pencocokan jawaban isian ---------- */
-function norm(t){
-  return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-}
-function jarak(a, b){
-  const m = a.length, n = b.length;
-  const d = Array.from({length: m + 1}, (_, i) => { const r = new Array(n + 1).fill(0); r[0] = i; return r; });
-  for (let y = 1; y <= n; y++) d[0][y] = y;
-  for (let x = 1; x <= m; x++)
-    for (let y = 1; y <= n; y++)
-      d[x][y] = Math.min(d[x-1][y] + 1, d[x][y-1] + 1, d[x-1][y-1] + (a[x-1] === b[y-1] ? 0 : 1));
-  return d[m][n];
-}
-function cocok(masuk, daftar){
-  const x = norm(masuk);
-  if (!x) return false;
-  return daftar.some(j => { const y = norm(j); return x === y || (y.length >= 6 && jarak(x, y) <= 1); });
-}
-
-/* ---------- Pewaktu per soal ---------- */
-let batas = 0, pewaktu = null, detikTerakhir = -1;
-function hentikanWaktu(){ if (pewaktu !== null){ clearInterval(pewaktu); pewaktu = null; } }
-function mulaiWaktu(){
-  hentikanWaktu();
-  detikTerakhir = -1;
-  batas = Date.now() + WAKTU_JAWAB * 1000;   // pakai jam sungguhan agar tidak bisa "membekukan" waktu
-  perbaruiWaktu();
-  pewaktu = setInterval(perbaruiWaktu, 250);
-}
-function perbaruiWaktu(){
-  const sisa = Math.max(0, batas - Date.now());
-  const detik = Math.ceil(sisa / 1000);
-  $("waktuIsi").style.width = (sisa / (WAKTU_JAWAB * 1000) * 100) + "%";
-  $("waktuAngka").textContent = detik;
-  $("waktu").classList.toggle("genting", detik <= 10);
-  if (detik !== detikTerakhir){
-    detikTerakhir = detik;
-    if (detik > 0 && detik <= 5) nada(BUNYI.tik);
-  }
-  if (sisa <= 0) waktuHabis();
-}
-function waktuHabis(){
-  hentikanWaktu();
-  if (terkunci) return;
-  terkunci = true;
-  const inp = $("jawaban");
-  inp.disabled = true; $("btnJawab").disabled = true;
-  inp.classList.add("salah");
-  nada(BUNYI.salah);
-  if (MODE_WAKTU_HABIS === "ulang-soal"){
-    $("umpan").textContent = "Waktu habis! Soal ini diulang dari awal, tanpa koin.";
-    setTimeout(() => { tampilSoal(); salahKali = 1; }, 1500);   // salahKali = 1 -> tanpa koin untuk soal ini
-  } else {
-    $("umpan").textContent = "Waktu habis! Kuis diulang dari soal 1.";
-    setTimeout(() => { acakSoal(); idx = 0; skor = 0; tampilSoal(); }, 1800);
-  }
-}
-
-function tampilSoal(){
-  terkunci = false; salahKali = 0;
-  const s = SOAL[idx];
-  $("infoSoal").textContent = "Soal " + (idx + 1) + " dari " + SOAL.length;
-  $("koinSkor").textContent = "x " + skor;
-  $("teksSoal").textContent = s.t;
-  $("petunjuk").textContent = s.h || "";
-  $("umpan").textContent = "";
-  gambarBagian();
-  const inp = $("jawaban");
-  inp.value = ""; inp.disabled = false; inp.className = "";
-  $("btnJawab").disabled = false;
-  inp.focus();
-  mulaiWaktu();
-}
-
-$("btnJawab").addEventListener("click", jawab);
-$("jawaban").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); jawab(); } });
-$("jawaban").addEventListener("input", () => { $("jawaban").classList.remove("salah"); $("umpan").textContent = ""; });
-
-function jawab(){
-  if (terkunci) return;
-  const s = SOAL[idx], inp = $("jawaban");
-  if (!norm(inp.value)){ $("umpan").textContent = "Isi jawabanmu dulu."; return; }
-
-  if (!cocok(inp.value, s.j)){
-    // Salah: jawaban benar TIDAK ditampilkan, soal TIDAK berpindah, pemain boleh mencoba lagi.
-    salahKali++;
-    inp.classList.add("salah");
-    $("umpan").textContent = "Salah, coba lagi.";
-    nada(BUNYI.salah);
-    inp.focus();
-    return;
-  }
-
-  terkunci = true;
-  hentikanWaktu();
-  inp.disabled = true; $("btnJawab").disabled = true;
-  inp.classList.remove("salah"); inp.classList.add("benar");
-  if (salahKali === 0){
-    skor++;
-    $("umpan").textContent = "Benar! Dapat 1 koin.";
-    $("koinSkor").textContent = "x " + skor;
-  } else {
-    $("umpan").textContent = "Benar! Tapi tanpa koin, karena sempat salah.";
-  }
-  nada(BUNYI.benar);
-  setTimeout(() => { idx++; idx < SOAL.length ? tampilSoal() : selesai(); }, 1300);
-}
-
-function selesai(){
-  hentikanWaktu();
-  const nilai = Math.round(skor / SOAL.length * 100);
-  const bintang = nilai >= 100 ? 3 : nilai >= 60 ? 2 : nilai >= 20 ? 1 : 0;
-  $("bintang").innerHTML = [0,1,2].map(i => '<span class="spr">' + sprite("bintang", 6, i >= bintang) + '</span>').join("");
-  $("skor").textContent = nilai;
-  $("komentar").textContent = skor + " dari " + SOAL.length + " jawaban benar. " +
-    (nilai === 100 ? "Sempurna, kamu jago banget!" : nilai >= 60 ? "Keren, hampir sempurna!" : "Tetap semangat! Isi data di bawah untuk ikut Dana Kaget.");
-  tampil("hasil");
-  hujanKoin(nilai >= 60);
-  nada(nilai >= 60 ? BUNYI.menang : BUNYI.kalah);
-}
-
-function hujanKoin(aktif){
-  const p = $("panggungHasil");
-  p.querySelectorAll(".jatuh").forEach(e => e.remove());
-  if (!aktif) return;
-  for (let i = 0; i < 12; i++){
-    const k = document.createElement("span");
-    k.className = "spr jatuh";
-    k.style.left = (4 + Math.random() * 88) + "%";
-    k.style.animationDelay = (Math.random() * 1.2).toFixed(2) + "s";
-    k.innerHTML = sprite("koin", 4);
-    p.appendChild(k);
-  }
-}
-
-/* ---------- Form ---------- */
-function pesan(teks, warna){ const p = $("pesan"); p.textContent = teks; p.style.color = warna || "inherit"; }
-const MERAH = "#c0392b", HIJAU = "#1a7f4b";
-
-$("nomor").addEventListener("input", e => { e.target.value = e.target.value.replace(/\D/g, ""); });
-
-/* ---------- Kunci "1 perangkat 1 kali ikut" ---------- */
-const KUNCI_KIRIM = "kuis_dana_kaget_sudah_kirim";
-function sudahKirim(){ try { return !!localStorage.getItem(KUNCI_KIRIM); } catch (e){ return false; } }
-function tandaiSudahKirim(){ try { localStorage.setItem(KUNCI_KIRIM, String(Date.now())); } catch (e){} }
-function tampilSelesai(){
-  hentikanWaktu();
-  if (pewaktuJadwal !== null){ clearInterval(pewaktuJadwal); pewaktuJadwal = null; }
-  $("pesanSelesai").textContent = PESAN_PEMENANG;
-  tampil("selesai");
-}
-
-async function kirim(){
-  if (sudahKirim()){ tampilSelesai(); return; }
-  if ($("btnKirim").disabled) return;                       // cegah ketukan/Enter ganda saat sedang mengirim
-  const nomor = $("nomor").value.trim();
-  if (!/^(08|628)\d{8,12}$/.test(nomor)){ nada(BUNYI.salah); return pesan("Nomor tidak valid. Gunakan format 08xxxxxxxxxx.", MERAH); }
-  if (!$("setuju").checked){ nada(BUNYI.salah); return pesan("Centang persetujuan dulu sebelum mengirim.", MERAH); }
-  if (!URL_APPS_SCRIPT) return pesan("Mode contoh: URL Apps Script belum diisi, data belum dikirim ke mana pun.", MERAH);
-
-  const data = {
-    nama: $("nama").value.trim(),
-    ewallet: $("jenis").value,
-    nomor: nomor,
-    skor: Math.round(skor / (SOAL.length || 1) * 100),
-    waktu: new Date().toISOString()
-  };
-  const opsi = {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(data)};
-  $("btnKirim").disabled = true; pesan("Mengirim...");
-
-  let hasil;
-  try {
-    const r = await fetch(URL_APPS_SCRIPT, opsi);           // baca balasan server (menolak nomor ganda)
-    try { hasil = await r.json(); } catch (e){ hasil = {ok: r.ok !== false}; }   // balasan bukan JSON (skrip lama)
-  } catch (err){
-    // Balasan tidak terbaca (mis. diblokir CORS): kirim "buta". Server menolak nomor ganda sendiri.
-    try { await fetch(URL_APPS_SCRIPT, Object.assign({mode:"no-cors"}, opsi)); hasil = {ok:true}; }
-    catch (err2){ $("btnKirim").disabled = false; return pesan("Gagal mengirim. Periksa koneksi lalu coba lagi.", MERAH); }
-  }
-
-  if (!hasil || hasil.ok === false){
-    $("btnKirim").disabled = false; nada(BUNYI.salah);
-    return pesan((hasil && hasil.pesan) || "Data ditolak. Periksa nomor lalu coba lagi.", MERAH);
-  }
-  tandaiSudahKirim();
-  nada(BUNYI.menang);
-  $("nama").value = ""; $("nomor").value = ""; $("setuju").checked = false; $("jenis").selectedIndex = 0;
-  tampilSelesai();
-}
-$("btnKirim").addEventListener("click", kirim);
-$("nomor").addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); kirim(); } });
-
-// Kalau perangkat ini sudah pernah mengirim data: langsung tampilkan layar terkunci.
-if (typeof window.addEventListener === "function"){
-  window.addEventListener("storage", e => { if (e.key === KUNCI_KIRIM && e.newValue) tampilSelesai(); });   // tab lain
-}
-if (sudahKirim()) tampilSelesai();
-</script>
 </body>
 </html>
